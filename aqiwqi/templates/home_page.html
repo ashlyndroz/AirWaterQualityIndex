@@ -1,0 +1,56 @@
+{% load static %}
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>MQTT Data</title>
+    <!-- Link to external CSS file -->
+    <link rel="stylesheet" href="{% static 'home_page.css' %}">
+    <!-- Include jQuery library (assuming it's already loaded) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Forecasting Data</h1>
+        <h2>Air Quality Sensor Data</h2>
+        <ul>
+            <li><strong>PMS Data:</strong> PM 1.0: {{ last_pms_data.pm_1_0 }}, PM 2.5: {{ last_pms_data.pm_2_5 }}, PM 10.0: {{ last_pms_data.pm_10_0 }}</li>
+            <li><strong>MQ7 Sensor:</strong> CO: {{ last_mq7_data.mq7_data }}</li>
+            <li><strong>AQI:</strong> {{ last_aqi }}</li>  
+            <li><strong>Predicted AQI:</strong> <span id="predicted_aqi" style="display: none;"></span></li>
+        </ul>
+        <button onclick="checkAQI()">Forecast AQI</button> <!-- Button to trigger checking AQI -->
+        <h2>Water Quality Sensor Data</h2>
+        <ul>
+            <li><strong>GPS Data:</strong> Longitude: {{ last_gps_data.longitude }}, Latitude: {{ last_gps_data.latitude }}</li>
+            <li><strong>pH Sensor:</strong> pH Data: {{ last_ph_sensor.ph_data }}</li>
+            <li><strong>Temperature Sensor:</strong> Temperature: {{ last_temp_sensor.temp }}</li>
+            <li><strong>TDS Sensor:</strong> TDS: {{ last_tds_sensor.tds }}</li>
+            {% if last_wqi %}
+            <li><strong>Water Quality Index (WQI):</strong> {{ last_wqi }}</li>
+            <li><strong>Predicted WQI:</strong> <span id="predicted_wqi" style="display: none;"></span></li> 
+            {% endif %}
+        </ul>
+        <button onclick="checkWQI()">Forecast WQI</button> <!-- Button to trigger checking WQI -->
+    </div>
+
+    <script>
+        function checkAQI() {
+            alert("Forecasting AQI...");
+            // Update predicted AQI using AJAX or directly
+            var predictedAQI = "{{ predicted_aqi }}";
+            document.getElementById("predicted_aqi").textContent = "{{ predicted_aqi }}";
+            document.getElementById("predicted_aqi").style.display = "inline";
+        }
+    
+        function checkWQI() {
+            alert("Forecasting WQI...");
+            // Update predicted WQI using AJAX or directly
+            var predictedWQI = "{{ predicted_wqi }}";
+            document.getElementById("predicted_wqi").textContent = "{{ predicted_wqi }}";
+            document.getElementById("predicted_wqi").style.display = "inline";
+        }
+    </script>
+</body>
+</html>
